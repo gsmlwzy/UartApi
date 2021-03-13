@@ -7,17 +7,29 @@
 
 #include "stdint.h"
 #include "usart.h"
+class UartTransApi;
+
 class UartTransApi
 {
 public:
     explicit UartTransApi(UART_HandleTypeDef *huart_);
-    void SendStr(char *str);
-    void SendNumber(uint32_t num);
-    void SendNumber(int32_t num);
-    void SendNumber(float num, int dec = 2);
+    UartTransApi(UART_HandleTypeDef *huart_, int dec_);
+
+    friend UartTransApi &operator<<(UartTransApi &self, int32_t num);
+    friend UartTransApi &operator<<(UartTransApi &self, uint32_t num);
+    friend UartTransApi &operator<<(UartTransApi &self, char *str);
+    friend UartTransApi &operator<<(UartTransApi &self, float num);
+
 private:
     UART_HandleTypeDef *huart;
     char buff[32];
+    int dec; // float类型保留的精度
+
+    void SendStr(char *str);
+    void SendNumber(uint32_t num);
+    void SendNumber(int32_t num);
+    void SendNumber(float num);
+
     void buffEraser(void);
 };
 
