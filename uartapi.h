@@ -23,7 +23,7 @@ public:
 private:
     UART_HandleTypeDef *huart;
     char buff[32];
-    int dec; // float类型保留的精度
+    const int dec; // float类型保留的精度
 
     void SendStr(char *str);
     void SendNumber(uint32_t num);
