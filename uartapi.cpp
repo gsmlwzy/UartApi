@@ -69,6 +69,10 @@ void UartTransApi::SendNumber(int32_t num)
 
 void UartTransApi::SendNumber(float num)
 {
+    if(num < 0) {
+        num = -num;
+        this->SendStr((char *)"-");
+    }
     int32_t num_int = (int32_t)num;
     // 不进行四舍五入, 数据有一点的难看, 但是不影响精度
     uint32_t num_dec = (uint32_t)((num - num_int) * pow(10.0, dec)); // 这儿没有进行四舍五入, 做的是去尾法, 先不管了
